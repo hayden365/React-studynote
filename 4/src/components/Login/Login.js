@@ -66,7 +66,7 @@ const Login = props => {
 	useEffect(() => {
 		const identifier = setTimeout(() => {
 			setFormIsValid(emailIsValid && passwordIsValid);
-		}, 500);
+		}, 200);
 
 		return () => {
 			clearTimeout(identifier);
