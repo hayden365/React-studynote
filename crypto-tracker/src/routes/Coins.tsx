@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -28,15 +28,26 @@ const Coin = styled.li`
 	border-radius: 20px;
 	margin-bottom: 10px;
 	a {
+		display: flex;
+		align-items: center;
 		padding: 20px;
 		transition: color 0.5s ease-in;
-		display: block;
 	}
 	&:hover {
 		a {
 			color: ${props => props.theme.accentColor};
 		}
 	}
+`;
+
+const Loader = styled.span`
+	text-align: center;
+`;
+
+const Img = styled.img`
+	width: 25px;
+	height: 25px;
+	margin-right: 10px;
 `;
 
 interface CoinInterface {
@@ -51,18 +62,36 @@ interface CoinInterface {
 
 export default function Coins() {
 	const [coins, setCoins] = useState<CoinInterface[]>([]);
+	const [loading, setLoading] = useState(true);
+	useEffect(() => {
+		(async () => {
+			const response = await fetch("https://api.coinpaprika.com/v1/coins");
+			const json = await response.json();
+			setCoins(json.slice(0, 100));
+			setLoading(false);
+		})();
+	}, []);
 	return (
 		<Container>
 			<Header>
 				<Title>코인</Title>
 			</Header>
-			<CoinsList>
-				{coins.map(coin => (
-					<Coin key={coin.id}>
-						<Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
-					</Coin>
-				))}
-			</CoinsList>
+			{loading ? (
+				<Loader>"Loading"</Loader>
+			) : (
+				<CoinsList>
+					{coins.map(coin => (
+						<Coin key={coin.id}>
+							<Link to={`/${coin.id}`}>
+								<Img
+									src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+								/>
+								{coin.name} &rarr;
+							</Link>
+						</Coin>
+					))}
+				</CoinsList>
+			)}
 		</Container>
 	);
 }
