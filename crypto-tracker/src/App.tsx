@@ -33,8 +33,9 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
-ol, ul {
+ol, ul,li {
 	list-style: none;
+  list-style-type: none;
 }
 blockquote, q {
 	quotes: none;
@@ -61,6 +62,7 @@ body {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 `;
 
