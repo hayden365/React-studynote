@@ -15,7 +15,7 @@ const Header = styled.header`
 	align-items: center;
 `;
 
-const CoinsList = styled.li``;
+const CoinsList = styled.ul``;
 
 const Title = styled.h1`
 	font-size: 48px;
@@ -63,6 +63,7 @@ interface CoinInterface {
 export default function Coins() {
 	const [coins, setCoins] = useState<CoinInterface[]>([]);
 	const [loading, setLoading] = useState(true);
+
 	useEffect(() => {
 		(async () => {
 			const response = await fetch("https://api.coinpaprika.com/v1/coins");
@@ -71,6 +72,7 @@ export default function Coins() {
 			setLoading(false);
 		})();
 	}, []);
+
 	return (
 		<Container>
 			<Header>
@@ -82,7 +84,7 @@ export default function Coins() {
 				<CoinsList>
 					{coins.map(coin => (
 						<Coin key={coin.id}>
-							<Link to={`/${coin.id}`}>
+							<Link to={`/${coin.id}`} state={{ name: coin.name }}>
 								<Img
 									src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
 								/>
