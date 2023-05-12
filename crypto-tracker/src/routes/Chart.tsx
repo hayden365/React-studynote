@@ -4,21 +4,25 @@ import { useOutletContext } from "react-router-dom";
 import { fetchCoinHistory } from "../api";
 import ApexChart from "react-apexcharts";
 
-interface IHistorical {
+export interface IHistorical {
 	time_open: number;
 	time_close: number;
-	open: string;
-	high: string;
-	low: string;
-	close: string;
+	open: number;
+	high: number;
+	low: number;
+	close: number;
 	volume: string;
 	market_cap: number;
 }
 
 export default function Chart() {
 	const { coinId }: { coinId: string } = useOutletContext();
-	const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
-		fetchCoinHistory(coinId),
+	const { isLoading, data } = useQuery<IHistorical[]>(
+		["ohlcv", coinId],
+		() => fetchCoinHistory(coinId),
+		// {
+		// 	refetchInterval: 10000,
+		// },
 	);
 	return (
 		<div>
@@ -63,6 +67,18 @@ export default function Chart() {
 							labels: { show: false },
 							axisTicks: {
 								show: false,
+							},
+							type: "datetime",
+							categories: data?.map(price => price.time_close),
+						},
+						fill: {
+							type: "gradient",
+							gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
+						},
+						colors: ["#0fbcf9"],
+						tooltip: {
+							y: {
+								formatter: value => `$${value.toFixed(1)}`,
 							},
 						},
 					}}
