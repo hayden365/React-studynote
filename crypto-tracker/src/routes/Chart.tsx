@@ -16,7 +16,8 @@ export interface IHistorical {
 }
 
 export default function Chart() {
-	const { coinId }: { coinId: string } = useOutletContext();
+	const { coinId, isDark }: { coinId: string; isDark: boolean } =
+		useOutletContext();
 	const { isLoading, data } = useQuery<IHistorical[]>(
 		["ohlcv", coinId],
 		() => fetchCoinHistory(coinId),
@@ -42,7 +43,7 @@ export default function Chart() {
 					]}
 					options={{
 						theme: {
-							mode: "dark",
+							mode: isDark ? "dark" : "light",
 						},
 						chart: {
 							height: 300,
