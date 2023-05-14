@@ -156,10 +156,9 @@ interface PriceData {
 }
 
 interface ICoinProps {
-	isDark: boolean;
 }
 
-export default function Coin({ isDark }: ICoinProps) {
+export default function Coin({  }: ICoinProps) {
 	const { coinId } = useParams() as { coinId: string };
 	/** 홈을 통해서 해당 페이지에 들어올 때만 name을 받을 수 있다. */
 	const { state } = useLocation() as RouteState;
@@ -246,7 +245,7 @@ export default function Coin({ isDark }: ICoinProps) {
 							<Link to={`/${coinId}/price`}>Price</Link>
 						</Tab>
 					</Tabs>
-					<Outlet context={{ coinId, isDark }} />
+					<Outlet context={{ coinId }} />
 				</div>
 			)}
 		</Container>
