@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { AtomEffect, atom, selector } from "recoil";
 
 export enum Categories {
 	"TO_DO" = "TO_DO",
@@ -17,9 +17,24 @@ export const categoryState = atom<Categories>({
 	default: Categories.TO_DO,
 });
 
+const localStorageEffect: <T>(key: string) => AtomEffect<T> =
+	key =>
+	({ setSelf, onSet }) => {
+		const savedValue = localStorage.getItem(key);
+		if (savedValue != null) {
+			setSelf(JSON.parse(savedValue));
+		}
+		onSet((newValue, _, isReset) => {
+			isReset
+				? localStorage.removeItem(key)
+				: localStorage.setItem(key, JSON.stringify(newValue));
+		});
+	};
+
 export const toDoState = atom<IToDo[]>({
 	key: "toDo",
 	default: [],
+	effects: [localStorageEffect("toDo")],
 });
 
 export const toDoSelector = selector({

@@ -25,7 +25,9 @@ function ToDoList() {
 		</div>
 	);
 }
-
+/** 코드 챌린지
+ * localstorage에 todo 저장기능
+ */
 // interface IForm {
 // 	email: string;
 // 	firstName: string;

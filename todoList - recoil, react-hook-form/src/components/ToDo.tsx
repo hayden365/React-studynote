@@ -19,6 +19,11 @@ export default function ToDo({ text, category, id }: IToDo) {
 			];
 		});
 	};
+	const deleteHandler = () => {
+		setToDos(oldToDos => {
+			return oldToDos.filter(toDo => toDo.id !== id);
+		});
+	};
 	return (
 		<li>
 			<span>{text}</span>
@@ -37,6 +42,7 @@ export default function ToDo({ text, category, id }: IToDo) {
 					Done
 				</button>
 			)}
+			<button onClick={deleteHandler}>Delete</button>
 		</li>
 	);
 }
