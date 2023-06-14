@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { RecoilRoot } from "recoil";
 import { theme } from "./theme.tsx";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -58,7 +59,10 @@ table {
 body {
   font-family: 'Source Sans Pro', sans-serif;
   background-color: ${props => props.theme.bgColor};
-  color: ${props => props.theme.textColor};
+  color: ${props => props.theme.white.darker};
+  line-height: 1.2;
+  font-weight: 300;
+  background-color: black;
 }
 
 a {
@@ -67,13 +71,17 @@ a {
 }
 `;
 
+const client = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 	<React.StrictMode>
 		<RecoilRoot>
-			<ThemeProvider theme={theme}>
-				<GlobalStyle />
-				<App />
-			</ThemeProvider>
+			<QueryClientProvider client={client}>
+				<ThemeProvider theme={theme}>
+					<GlobalStyle />
+					<App />
+				</ThemeProvider>
+			</QueryClientProvider>
 		</RecoilRoot>
 	</React.StrictMode>,
 );
