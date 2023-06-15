@@ -116,6 +116,14 @@ const BigTitle = styled.h3`
 	top: -80px;
 `;
 
+const BigOverview = styled.p`
+	padding: 20px;
+	position: relative;
+	top: -80px;
+
+	color: ${props => props.theme.white.lighter};
+`;
+
 const rowVariants = {
 	hidden: {
 		x: window.outerWidth + 5,
@@ -253,6 +261,7 @@ export default function Home() {
 												}}
 											/>
 											<BigTitle>{clickedMovie.title}</BigTitle>
+											<BigOverview>{clickedMovie.overview}</BigOverview>
 										</>
 									)}
 								</BigMovie>

@@ -1,7 +1,8 @@
-import React from 'react'
+import React from "react";
+import { useLocation } from "react-router-dom";
 
 export default function Search() {
-  return (
-    <div>Search</div>
-  )
+	const location = useLocation();
+	const keyword = new URLSearchParams(location.search).get("keyword");
+	return null;
 }
