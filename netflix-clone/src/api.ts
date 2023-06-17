@@ -25,3 +25,9 @@ export function getMovies() {
 		response => response.json(),
 	);
 }
+
+export function topRatedMovies() {
+	return fetch(`${BASE_PATH}/movie/top_rated?api_key=${API_KEY}`).then(
+		response => response.json(),
+	);
+}
